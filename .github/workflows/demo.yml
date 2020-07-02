@@ -1,0 +1,53 @@
+name: Demo
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/checkout@v2
+      with:
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Install dependencies
+      working-directory: example
+      run: npm install
+
+    - name: Build
+      working-directory: example
+      run: npm run build
+
+    - name: Copy public directory
+      run: |
+        rm -rf ./gh-pages/*
+        cp -rT ./example/public ./gh-pages
+
+    - name: Check for changes
+      id: check-for-changes
+      run: |
+        cd ./gh-pages
+        git add --all
+        git diff-index --cached --quiet HEAD -- || echo "::set-output name=has-changed::true"
+
+    - name: Commit changes
+      if: steps.check-for-changes.outputs.has-changed == 'true'
+      run: |
+        cd ./gh-pages
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Update demo"
+
+    - name: Push changes to GitHub Pages
+      if: steps.check-for-changes.outputs.has-changed == 'true'
+      uses: ad-m/github-push-action@v0.5.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        directory: gh-pages
+        branch: gh-pages
