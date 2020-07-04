@@ -1,42 +1,64 @@
 <script>
+  import {
+    Editor as EditorView,
+    Project as ProjectView,
+    Terminal as TerminalView,
+  } from './views';
   import SuperLayout from 'svelte-superlayout';
 
   let use_dark_theme = false;
-
   let layout = {
     type: 'hsplit',
+    split_pos: 0.2,
     contents: [
       {
         type: 'tabs',
         contents: [
-          { title: 'Project' },
-          { title: 'Plugins' },
+          { title: 'Project', data: 'project' },
+          { title: 'Plugins', data: 'plugins' },
         ],
       },
       {
         type: 'vsplit',
+        split_pos: 0.7,
         contents: [
           {
             type: 'tabs',
             current: 1,
             contents: [
-              { title: 'rollup.config.js' },
-              { title: 'README.md' },
-              { title: 'SuperLayout.svelte' },
+              { title: 'rollup.config.js', data: 'editor' },
+              { title: 'README.md', data: 'editor' },
+              { title: 'SuperLayout.svelte', data: 'editor' },
             ],
           },
           {
             type: 'tabs',
             contents: [
-              { title: 'Terminal' },
-              { title: 'Documentation' },
-              { title: 'Debugger' },
+              { title: 'Terminal', data: 'terminal' },
+              { title: 'Documentation', data: 'docs' },
+              { title: 'Debugger', data: 'debug' },
             ],
           },
         ],
       },
     ]
   };
+
+  function makeComponent(target, data) {
+    switch (data) {
+      case 'project':
+        new ProjectView({ target });
+        break;
+      case 'editor':
+        new EditorView({ target });
+        break;
+      case 'terminal':
+        new TerminalView({ target });
+        break;
+      default:
+        throw new Error("Failed!");
+    }
+  }
 </script>
 
 <style>
@@ -64,5 +86,5 @@
   class:light-theme={!use_dark_theme}
   class:dark-theme={use_dark_theme}
 >
-  <SuperLayout {layout} />
+  <SuperLayout {layout} {makeComponent} />
 </main>

@@ -1,8 +1,10 @@
 <script>
   import Tab from './Tab.svelte';
+  import ComponentPane from './ComponentPane.svelte';
 
   export let tabs = [{ title: "Tab" }];
   export let current = 0;
+
 </script>
 
 <style>
@@ -28,14 +30,13 @@
   }
 
   div.content {
-    background: var(--super--primary-bg);
-    border-radius: var(--super--border-radius);
-    padding: var(--super--padding);
-    color: var(--super--primary-fg);
-
-    display: inline-block;
-
+    display: none;
     grid-area: content;
+    position: relative;
+  }
+
+  div.content.current {
+    display: inline-block;
   }
 </style>
 
@@ -49,6 +50,12 @@
       />
     {/each}
   </nav>
-  <div class="content">
-  </div>
+  {#each tabs as tab, i}
+    <div
+      class="content"
+      class:current={current === i}
+    >
+      <ComponentPane data={tab.data} />
+    </div>
+  {/each}
 </div>

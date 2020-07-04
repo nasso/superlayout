@@ -1,6 +1,6 @@
 <script>
   export let vertical = false;
-  export let split_pos = 0.25;
+  export let split_pos = 0.5;
 </script>
 
 <style>
@@ -40,8 +40,8 @@
   class:vertical
   class:horizontal={!vertical}
   style={`
-    grid-template-rows: ${split_pos * 100}% auto;
-    grid-template-columns: ${split_pos * 100}% auto;
+    grid-template-rows: calc(${split_pos * 100}% - var(--super--gaps) / 2) auto;
+    grid-template-columns: calc(${split_pos * 100}% - var(--super--gaps) / 2) auto;
   `}
 >
   <slot />

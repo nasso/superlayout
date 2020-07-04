@@ -1,9 +1,12 @@
 <script>
   import { setContext } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { readable } from 'svelte/store';
   import Pane from './Pane.svelte';
 
   export let layout;
+  export let makeComponent;
+
+  setContext('makeComponent', (target, data) => makeComponent(target, data));
 </script>
 
 <style>
@@ -15,7 +18,7 @@
     --super--secondary-fg: var(--super-secondary-fg, #222222);
     --super--secondary-fgb: var(--super-secondary-fgb, #666666);
     --super--gaps: var(--super-gaps, 4px);
-    --super--padding: var(--super-padding, 8px);
+    --super--padding: var(--super-padding, 16px);
     --super--border-radius: var(--super-border-radius, 8px);
     --super--tab-height: var(--super-tab-height, 28px);
     --super--tab-padding: var(--super-tab-padding, 24px);
@@ -31,6 +34,12 @@
     right: 0px;
     bottom: 0px;
     left: 0px;
+
+    box-sizing: border-box;
+  }
+
+  div.outer :global(*), div.outer :global(*:after), div.outer :global(*:before) {
+    box-sizing: inherit;
   }
 
   div.inner {
