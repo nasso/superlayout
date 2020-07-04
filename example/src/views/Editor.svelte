@@ -13,7 +13,7 @@
   textarea {
     width: 100%;
     height: 100%;
-    margin: none;
+    margin: 0px;
     border: none;
     resize: none;
     background: none;

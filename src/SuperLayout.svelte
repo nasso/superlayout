@@ -6,7 +6,7 @@
   export let layout;
   export let makeComponent;
 
-  setContext('makeComponent', (target, data) => makeComponent(target, data));
+  setContext('super__makeComponent', (target, data) => makeComponent(target, data));
 </script>
 
 <style>

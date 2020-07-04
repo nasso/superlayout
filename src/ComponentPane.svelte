@@ -4,7 +4,7 @@
 
   export let data;
 
-  const makeComponent = getContext('makeComponent');
+  const makeComponent = getContext('super__makeComponent');
 
   function mountComponent(node, data) {
     function update(data) {
