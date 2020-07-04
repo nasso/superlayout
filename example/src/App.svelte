@@ -18,6 +18,7 @@
         contents: [
           {
             type: 'tabs',
+            current: 1,
             contents: [
               { title: 'rollup.config.js' },
               { title: 'README.md' },

@@ -8,15 +8,19 @@
 
 <style>
   div.outer {
-    --super--gaps: var(--super-gaps, 4px);
-    --super--padding: var(--super-padding, 8px);
-    --super--border-radius: var(--super-border-radius, 8px);
     --super--primary-bg: var(--super-primary-bg, #ffffff);
     --super--primary-fg: var(--super-primary-fg, #333333);
     --super--primary-fgb: var(--super-primary-fgb, #888888);
     --super--secondary-bg: var(--super-secondary-bg, #E5E5E5);
     --super--secondary-fg: var(--super-secondary-fg, #222222);
     --super--secondary-fgb: var(--super-secondary-fgb, #666666);
+    --super--gaps: var(--super-gaps, 4px);
+    --super--padding: var(--super-padding, 8px);
+    --super--border-radius: var(--super-border-radius, 8px);
+    --super--tab-height: var(--super-tab-height, 28px);
+    --super--tab-padding: var(--super-tab-padding, 24px);
+    --super--tab-font-size: var(--super-tab-font-size, 12px);
+    --super--transitions-duration: var(--super--transitions--duration, 100ms);
 
     background: var(--super--secondary-bg);
 

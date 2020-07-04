@@ -14,7 +14,7 @@
     <svelte:self bind:layout={layout.contents[1]} />
   </SplitPane>
 {:else if layout.type === 'tabs'}
-  <TabbedPane bind:tabs={layout.contents} />
+  <TabbedPane bind:tabs={layout.contents} bind:current={layout.current} />
 {:else}
   <span>Error! Unknown layout type: <code>{layout.type}</code></span>
 {/if}
