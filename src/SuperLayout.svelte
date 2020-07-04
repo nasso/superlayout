@@ -1,1 +1,47 @@
-<p>Yay! Super layout!</p>
+<script>
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
+  import Pane from './Pane.svelte';
+
+  export let layout;
+</script>
+
+<style>
+  div.outer {
+    --super--gaps: var(--super-gaps, 4px);
+    --super--padding: var(--super-padding, 8px);
+    --super--border-radius: var(--super-border-radius, 8px);
+    --super--primary-bg: var(--super-primary-bg, #ffffff);
+    --super--primary-fg: var(--super-primary-fg, #333333);
+    --super--primary-fgb: var(--super-primary-fgb, #888888);
+    --super--secondary-bg: var(--super-secondary-bg, #E5E5E5);
+    --super--secondary-fg: var(--super-secondary-fg, #222222);
+    --super--secondary-fgb: var(--super-secondary-fgb, #666666);
+
+    background: var(--super--secondary-bg);
+
+    display: inline-block;
+
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+  }
+
+  div.inner {
+    display: inline-block;
+
+    position: absolute;
+    top: var(--super--gaps);
+    right: var(--super--gaps);
+    bottom: var(--super--gaps);
+    left: var(--super--gaps);
+  }
+</style>
+
+<div class='outer'>
+  <div class='inner'>
+    <Pane bind:layout />
+  </div>
+</div>
