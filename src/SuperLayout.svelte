@@ -17,6 +17,7 @@
     --super--secondary-bg: var(--super-secondary-bg, #E5E5E5);
     --super--secondary-fg: var(--super-secondary-fg, #222222);
     --super--secondary-fgb: var(--super-secondary-fgb, #666666);
+    --super--splitter-width: var(--super-splitter-width, 8px);
     --super--gaps: var(--super-gaps, 4px);
     --super--padding: var(--super-padding, 16px);
     --super--border-radius: var(--super-border-radius, 8px);
