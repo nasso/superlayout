@@ -1,5 +1,5 @@
 <script>
-  import Tab from './Tab.svelte';
+  import TabWrapper from './TabWrapper.svelte';
   import ComponentPane from './ComponentPane.svelte';
 
   export let tabs = [{ title: "Tab" }];
@@ -43,8 +43,8 @@
 <div class="root">
   <nav>
     {#each tabs as tab, i}
-      <Tab
-        on:click={() => current = i}
+      <TabWrapper
+        on:makeCurrent={() => current = i}
         title={tab.title}
         current={current === i}
       />

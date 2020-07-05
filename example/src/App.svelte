@@ -2,14 +2,18 @@
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
   import SuperLayout from 'svelte-superlayout';
+  import { DefaultTab } from 'svelte-superlayout';
   import {
     Editor as EditorView,
     Project as ProjectView,
     Terminal as TerminalView,
   } from './views';
+  import CustomTab from './CustomTab.svelte';
+
+  setContext('available_themes', ['system', 'light', 'dark', 'slim', 'light_slim', 'dark_slim', 'custom_tabs']);
 
   let theme = writable('system');
-  setContext('demo_theme', theme);
+  setContext('current_theme', theme);
 
   let layout = {
     type: 'hsplit',
@@ -60,7 +64,7 @@
         new TerminalView({ target });
         break;
       default:
-        throw new Error("Failed!");
+        throw new Error("i didn't implement this view so you can look at this error screen");
     }
   }
 </script>
@@ -77,7 +81,7 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    main.theme-system {
+    main.theme-system, main.theme-slim {
       --super-primary-bg: #282A2E;
       --super-primary-fg: #ECEBEC;
       --super-primary-fgb: #929593;
@@ -87,7 +91,7 @@
     }
   }
 
-  main.theme-dark {
+  main.theme-dark, main.theme-dark_slim {
     --super-primary-bg: #282A2E;
     --super-primary-fg: #ECEBEC;
     --super-primary-fgb: #929593;
@@ -95,8 +99,17 @@
     --super-secondary-fg: #C5C8C6;
     --super-secondary-fgb: #969896;
   }
+
+  main.theme-slim, main.theme-dark_slim, main.theme-light_slim {
+    --super-gaps: 1px;
+    --super-border-radius: 0px;
+    --super-tab-height: 24px;
+    --super-tab-padding: 16px;
+    --super-splitter-width: 6px;
+    --super-splitter-border-radius: 0px;
+  }
 </style>
 
 <main class={`theme-${$theme}`}>
-  <SuperLayout {layout} {makeComponent} />
+  <SuperLayout {layout} {makeComponent} tabs={$theme === 'custom_tabs' ? CustomTab : DefaultTab} />
 </main>

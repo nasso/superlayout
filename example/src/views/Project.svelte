@@ -1,7 +1,8 @@
 <script>
   import { getContext } from 'svelte';
 
-  let theme = getContext('demo_theme');
+  let current_theme = getContext('current_theme');
+  let available_themes = getContext('available_themes');
 </script>
 
 <div>
@@ -9,18 +10,11 @@
     This is the project tree! The perfect place for a theme switcher!
   </p>
 
-  <label>
-    <input type="radio" bind:group={$theme} value="system">
-    System
-  </label>
-  <br />
-  <label>
-    <input type="radio" bind:group={$theme} value="light">
-    Light
-  </label>
-  <br />
-  <label>
-    <input type="radio" bind:group={$theme} value="dark">
-    Dark
-  </label>
+  {#each available_themes as theme}
+    <label>
+      <input type="radio" bind:group={$current_theme} value={theme}>
+      {theme}
+    </label>
+    <br />
+  {/each}
 </div>

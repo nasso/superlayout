@@ -1,12 +1,19 @@
 <script>
   import { setContext } from 'svelte';
-  import { readable } from 'svelte/store';
+  import { writable } from 'svelte/store';
   import Pane from './Pane.svelte';
+  import DefaultTab from './DefaultTab.svelte';
 
   export let layout;
   export let makeComponent;
+  export let tabs = DefaultTab;
+
+  let tab_component_store = writable();
+
+  $: tab_component_store.set(tabs);
 
   setContext('super__makeComponent', (target, data) => makeComponent(target, data));
+  setContext('super__tabComponent', tab_component_store);
 </script>
 
 <style>
@@ -18,6 +25,7 @@
     --super--secondary-fg: var(--super-secondary-fg, #222222);
     --super--secondary-fgb: var(--super-secondary-fgb, #666666);
     --super--splitter-width: var(--super-splitter-width, 8px);
+    --super--splitter-border-radius: calc(var(--super-splitter-border-radius) / 2);
     --super--gaps: var(--super-gaps, 4px);
     --super--padding: var(--super-padding, 16px);
     --super--border-radius: var(--super-border-radius, 8px);
@@ -44,7 +52,7 @@
   }
 
   div.inner {
-    display: inline-block;
+    display: inline-flex;
 
     position: absolute;
     top: var(--super--gaps);

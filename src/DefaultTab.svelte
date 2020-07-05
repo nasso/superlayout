@@ -1,11 +1,16 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
   export let title = "Tab";
   export let current = false;
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <style>
   button {
     all: unset;
+    border: none;
     user-select: none;
 
     background: var(--super--secondary-bg);
@@ -26,6 +31,10 @@
     color: var(--super--primary-fg);
   }
 
+  button:focus {
+    outline: none;
+  }
+
   button:focus:after {
     content: '';
 
@@ -40,4 +49,4 @@
   }
 </style>
 
-<button on:click class:current>{title}</button>
+<button on:click={() => dispatch('makeCurrent')} class:current>{title}</button>

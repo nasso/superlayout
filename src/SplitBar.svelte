@@ -9,7 +9,7 @@
     opacity: 0.0;
 
     background: var(--super--primary-fgb);
-    border-radius: calc(var(--super--splitter-width) / 2);
+    border-radius: var(--super--splitter-border-radius);
     transition: opacity var(--super--transitions-duration);
   }
 
@@ -38,20 +38,24 @@
   let mouse_is_down = false;
 
   function handleMouseDown(e) {
-    if (mouse_is_down)
-      return;
-
-    mouse_is_down |= e.button === 0;
+    if (!mouse_is_down && e.button === 0) {
+      e.preventDefault();
+      mouse_is_down = true;
+    }
   }
 
   function handleMouseUp(e) {
-    mouse_is_down &= e.button !== 0;
+    if (mouse_is_down && e.button === 0) {
+      e.preventDefault();
+      mouse_is_down = false;
+    }
   }
 
   function handleMouseMove(e) {
     if (!mouse_is_down)
       return;
 
+    e.preventDefault();
     let rect = container.getBoundingClientRect();
 
     if (vertical) {

@@ -40,7 +40,7 @@
     bottom: 0px;
     left: 0px;
 
-    overflow: hidden;
+    overflow: auto;
   }
 </style>
 
