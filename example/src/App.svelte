@@ -1,12 +1,16 @@
 <script>
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
+  import SuperLayout from 'svelte-superlayout';
   import {
     Editor as EditorView,
     Project as ProjectView,
     Terminal as TerminalView,
   } from './views';
-  import SuperLayout from 'svelte-superlayout';
 
-  let use_dark_theme = false;
+  let theme = writable('system');
+  setContext('demo_theme', theme);
+
   let layout = {
     type: 'hsplit',
     split_pos: 0.2,
@@ -72,6 +76,17 @@
     left: 0px;
   }
 
+  @media (prefers-color-scheme: dark) {
+    main:not(.light-theme) {
+      --super-primary-bg: #1D1F21;
+      --super-primary-fg: #C5C8C6;
+      --super-primary-fgb: #969896;
+      --super-secondary-bg: #282A2E;
+      --super-secondary-fg: #ECEBEC;
+      --super-secondary-fgb: #929593;
+    }
+  }
+
   main.dark-theme {
     --super-primary-bg: #1D1F21;
     --super-primary-fg: #C5C8C6;
@@ -83,8 +98,8 @@
 </style>
 
 <main
-  class:light-theme={!use_dark_theme}
-  class:dark-theme={use_dark_theme}
+  class:light-theme={$theme === 'light'}
+  class:dark-theme={$theme === 'dark'}
 >
   <SuperLayout {layout} {makeComponent} />
 </main>
