@@ -77,29 +77,26 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    main:not(.light-theme) {
-      --super-primary-bg: #1D1F21;
-      --super-primary-fg: #C5C8C6;
-      --super-primary-fgb: #969896;
-      --super-secondary-bg: #282A2E;
-      --super-secondary-fg: #ECEBEC;
-      --super-secondary-fgb: #929593;
+    main.theme-system {
+      --super-primary-bg: #282A2E;
+      --super-primary-fg: #ECEBEC;
+      --super-primary-fgb: #929593;
+      --super-secondary-bg: #1D1F21;
+      --super-secondary-fg: #C5C8C6;
+      --super-secondary-fgb: #969896;
     }
   }
 
-  main.dark-theme {
-    --super-primary-bg: #1D1F21;
-    --super-primary-fg: #C5C8C6;
-    --super-primary-fgb: #969896;
-    --super-secondary-bg: #282A2E;
-    --super-secondary-fg: #ECEBEC;
-    --super-secondary-fgb: #929593;
+  main.theme-dark {
+    --super-primary-bg: #282A2E;
+    --super-primary-fg: #ECEBEC;
+    --super-primary-fgb: #929593;
+    --super-secondary-bg: #1D1F21;
+    --super-secondary-fg: #C5C8C6;
+    --super-secondary-fgb: #969896;
   }
 </style>
 
-<main
-  class:light-theme={$theme === 'light'}
-  class:dark-theme={$theme === 'dark'}
->
+<main class={`theme-${$theme}`}>
   <SuperLayout {layout} {makeComponent} />
 </main>
