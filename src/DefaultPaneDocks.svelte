@@ -40,7 +40,6 @@
 
 <style>
   .dropzones {
-    grid-area: content;
     position: relative;
   }
 

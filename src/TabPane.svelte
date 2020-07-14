@@ -72,6 +72,11 @@
   .content.current {
     display: inline-block;
   }
+
+  .docks_wrapper {
+    grid-area: content;
+    display: grid;
+  }
 </style>
 
 <div class="root">
@@ -98,6 +103,8 @@
     </div>
   {/each}
   {#if $tab_drag_state.dragging}
-    <svelte:component this={$dock_component} on:dock />
+    <div class="docks_wrapper">
+      <svelte:component this={$dock_component} on:dock />
+    </div>
   {/if}
 </div>
