@@ -1,4 +1,5 @@
 <script>
+  import { tick } from 'svelte';
   import SplitPane from './SplitPane.svelte';
   import TabPane from './TabPane.svelte';
 
@@ -26,7 +27,13 @@
   }
 
   function unsplit(keep_index) {
-    layout = layout.contents[keep_index];
+    const contents = layout.contents[keep_index];
+
+    layout.type = 'empty';
+
+    tick().then(() => {
+      layout = contents;
+    });
   }
 </script>
 
@@ -37,6 +44,6 @@
   </SplitPane>
 {:else if layout.type === 'tabs'}
   <TabPane bind:tabs={layout.contents} bind:current={layout.current} on:tabdragstart on:dock={on_dock} on:empty />
-{:else}
+{:else if layout.type !== 'empty'}
   <span>Error! Unknown layout type: <code>{layout.type}</code></span>
 {/if}
