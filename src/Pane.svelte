@@ -6,15 +6,37 @@
     type: 'tabs',
     contents: [{ title: '/!\\ EMPTY /!\\' }]
   };
+
+  function on_dock(e) {
+    const { data, side } = e.detail;
+
+    let new_pane = {
+      type: 'tabs',
+      contents: [data],
+    };
+
+    layout = {
+      type: side === 'right' || side === 'left' ? 'hsplit' : 'vsplit',
+      split_pos: 0.5,
+      contents: [
+        side === 'left' || side === 'top' ? new_pane : layout,
+        side === 'left' || side === 'top' ? layout : new_pane,
+      ]
+    };
+  }
+
+  function unsplit(keep_index) {
+    layout = layout.contents[keep_index];
+  }
 </script>
 
 {#if layout.type === 'hsplit' || layout.type === 'vsplit'}
   <SplitPane vertical={layout.type === 'vsplit'} bind:split_pos={layout.split_pos}>
-    <svelte:self bind:layout={layout.contents[0]} />
-    <svelte:self bind:layout={layout.contents[1]} />
+    <svelte:self bind:layout={layout.contents[0]} on:tabdragstart on:empty={() => unsplit(1)} />
+    <svelte:self bind:layout={layout.contents[1]} on:tabdragstart on:empty={() => unsplit(0)} />
   </SplitPane>
 {:else if layout.type === 'tabs'}
-  <TabPane bind:tabs={layout.contents} bind:current={layout.current} />
+  <TabPane bind:tabs={layout.contents} bind:current={layout.current} on:tabdragstart on:dock={on_dock} on:empty />
 {:else}
   <span>Error! Unknown layout type: <code>{layout.type}</code></span>
 {/if}

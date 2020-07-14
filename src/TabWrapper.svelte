@@ -4,7 +4,7 @@
   export let title = "Tab";
   export let current = false;
 
-  let tab_component = getContext('super__tabComponent');
+  const tab_component = getContext('super__tabComponent');
 </script>
 
 <style>
@@ -14,5 +14,5 @@
 </style>
 
 <div>
-  <svelte:component this={$tab_component} on:makeCurrent {title} {current} />
+  <svelte:component this={$tab_component} on:makeCurrent on:close {title} {current} />
 </div>
