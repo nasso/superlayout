@@ -39,11 +39,17 @@
 
 {#if layout.type === 'hsplit' || layout.type === 'vsplit'}
   <SplitPane vertical={layout.type === 'vsplit'} bind:split_pos={layout.split_pos}>
-    <svelte:self bind:layout={layout.contents[0]} on:tabdragstart on:empty={() => unsplit(1)} />
-    <svelte:self bind:layout={layout.contents[1]} on:tabdragstart on:empty={() => unsplit(0)} />
+    <svelte:self bind:layout={layout.contents[0]} on:tabdragstart on:tabdragend on:empty={() => unsplit(1)} />
+    <svelte:self bind:layout={layout.contents[1]} on:tabdragstart on:tabdragend on:empty={() => unsplit(0)} />
   </SplitPane>
 {:else if layout.type === 'tabs'}
-  <TabPane bind:tabs={layout.contents} bind:current={layout.current} on:tabdragstart on:dock={on_dock} on:empty />
+  <TabPane
+    bind:tabs={layout.contents}
+    bind:current={layout.current}
+    on:tabdragstart
+    on:tabdragend
+    on:empty
+    on:dock={on_dock} />
 {:else if layout.type !== 'empty'}
   <span>Error! Unknown layout type: <code>{layout.type}</code></span>
 {/if}

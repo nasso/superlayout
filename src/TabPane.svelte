@@ -29,15 +29,19 @@
   function on_tabdragstart(index, drag) {
     const data = tabs[index];
 
-    drag.dataTransfer.setData('application/x-superlayout', JSON.stringify(data));
-    drag.dataTransfer.setData('text/plain', JSON.stringify(data, null, 4));
+    let json = JSON.stringify(data);
+
+    drag.dataTransfer.setData('application/x-superlayout', json);
+    drag.dataTransfer.setData('text/plain', json);
 
     dispatch('tabdragstart', { data });
+  }
 
-    // for some reason this is needed (at least on ff)
-    setTimeout(() => {
+  function on_tabdragend(index, drag) {
+    dispatch('tabdragend');
+
+    if (drag.dataTransfer.dropEffect === "move")
       closeTab(index);
-    }, 0);
   }
 </script>
 
@@ -63,6 +67,11 @@
     margin-right: var(--super--gaps);
   }
 
+  .tab.hidden {
+    position: absolute;
+    opacity: 0.0;
+  }
+
   .content {
     display: none;
     grid-area: content;
@@ -85,7 +94,9 @@
       <div
         class="tab"
         draggable="true"
+        class:hidden={tab._hidden}
         on:dragstart={e => on_tabdragstart(i, e)}
+        on:dragend={e => on_tabdragend(i, e)}
         animate:flip
       >
         <TabWrapper

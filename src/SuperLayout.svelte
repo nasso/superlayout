@@ -27,6 +27,10 @@
   function on_tabdragstart(e) {
     $tab_drag_state.dragging = true;
   }
+
+  function on_tabdragend(e) {
+    $tab_drag_state.dragging = false;
+  }
 </script>
 
 <style>
@@ -85,6 +89,6 @@
 
 <div class='outer'>
   <div class='inner'>
-    <Pane bind:layout on:tabdragstart={on_tabdragstart} />
+    <Pane bind:layout on:tabdragstart={on_tabdragstart} on:tabdragend={on_tabdragend} />
   </div>
 </div>
