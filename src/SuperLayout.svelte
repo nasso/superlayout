@@ -14,6 +14,7 @@
   const pane_docks_component = writable();
   const tab_drag_state = writable({
     dragging: false,
+    data: null,
   });
 
   $: tab_component_store.set(tabs);

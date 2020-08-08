@@ -26,22 +26,18 @@
       current--;
   }
 
-  function on_tabdragstart(index, drag) {
-    const data = tabs[index];
+  function makeTabDragEventDetail(i) {
 
-    let json = JSON.stringify(data);
-
-    drag.dataTransfer.setData('application/x-superlayout', json);
-    drag.dataTransfer.setData('text/plain', json);
-
-    dispatch('tabdragstart', { data });
   }
 
-  function on_tabdragend(index, drag) {
-    dispatch('tabdragend');
+  function on_tabdragstart(e) {
+    dispatch('tabdragstart', makeTabDragEventDetail(i));
+  }
 
-    if (drag.dataTransfer.dropEffect === "move")
-      closeTab(index);
+  function on_tabdragmove(e) {
+  }
+
+  function on_tabdragend(e) {
   }
 </script>
 
@@ -91,19 +87,15 @@
 <div class="root">
   <nav>
     {#each tabs as tab, i (tab)}
-      <div
-        class="tab"
-        draggable="true"
-        class:hidden={tab._hidden}
-        on:dragstart={e => on_tabdragstart(i, e)}
-        on:dragend={e => on_tabdragend(i, e)}
-        animate:flip
-      >
+      <div class="tab" animate:flip>
         <TabWrapper
           title={tab.title}
           current={current === i}
           on:makeCurrent={() => current = i}
           on:close={() => closeTab(i)}
+          on:tabdragstart={on_tabdragstart}
+          on:tabdragmove={on_tabdragmove}
+          on:tabdragend={on_tabdragend}
         />
       </div>
     {/each}
